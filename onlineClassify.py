@@ -209,7 +209,7 @@ def eval_one_epoch(testFile=testFile):
     is_training = False
     current_data=[]
 
-    current_data,current_colors,current_normals = provider.load_ply_data(testFile,NUM_POINT,path2colorsavgSigma)
+    current_data,current_colors,current_normals = provider.online_load_ply_data(testFile,NUM_POINT,path2colorsavgSigma)
     #current_label = np.squeeze(current_label)
     if pipelineCode==1:
         current_colors = np.concatenate((current_colors,current_normals),axis=1)
@@ -258,9 +258,9 @@ def main():
     #input = ((255 - np.array(request.json, dtype=np.uint8)) / 255.0).reshape(1, 784)
     #testFile = request.args.get('testFile')
     #testFile = request.data
-    with open('testFile.ply','w') as of:
-        of.write(request.data)
-    output = eval_one_epoch(testFile='testFile.ply')
+    #with open('testFile.ply','w') as of:
+    #    of.write(request.data)
+    output = eval_one_epoch(testFile=request.data)
     print(output)
     return output
 
